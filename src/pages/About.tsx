@@ -1,14 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Rocket, Heart } from "lucide-react";
+import { ArrowLeft, Rocket, Heart, BookOpen, Zap, Volume2, Accessibility } from "lucide-react";
 import StarField from "@/components/StarField";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
+
+const features = [
+  { icon: BookOpen, label: "Mission Explorer", desc: "Browse real missions from NASA, ESA, ISRO and more" },
+  { icon: Zap, label: "What If Scenarios", desc: "Make decisions and see how they compare to history" },
+  { icon: Volume2, label: "Listen Along", desc: "Text-to-speech with adjustable speed for accessibility" },
+  { icon: Accessibility, label: "Inclusive Design", desc: "Supports dyslexia-friendly reading and screen readers" },
+];
 
 const About = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative min-h-screen px-6 py-12">
+    <div className="relative min-h-screen px-6 py-10">
       <StarField />
       <motion.div
         variants={staggerContainer}
@@ -19,40 +26,46 @@ const About = () => {
         <motion.div variants={fadeInUp}>
           <button
             onClick={() => navigate("/")}
-            className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-colors mb-6"
+            className="w-10 h-10 rounded-xl glass border border-border/40 flex items-center justify-center hover:border-primary/30 transition-all mb-6"
           >
-            <ArrowLeft className="w-5 h-5 text-secondary-foreground" />
+            <ArrowLeft className="w-4 h-4 text-secondary-foreground" />
           </button>
         </motion.div>
 
         <motion.div variants={fadeInUp} className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl gradient-accent flex items-center justify-center mx-auto mb-4 shadow-glow">
-            <Rocket className="w-8 h-8 text-primary-foreground" />
+          <div className="w-20 h-20 rounded-3xl gradient-accent flex items-center justify-center mx-auto mb-5 shadow-glow">
+            <Rocket className="w-10 h-10 text-primary-foreground" />
           </div>
-          <h1 className="text-3xl font-heading font-bold text-gradient">SpaceWise</h1>
+          <h1 className="text-3xl font-heading font-bold text-gradient mb-2">SpaceWise Lite</h1>
+          <p className="text-muted-foreground text-sm">Compact Lessons from Space</p>
         </motion.div>
 
-        <motion.div variants={fadeInUp} className="gradient-card rounded-xl border border-border/50 p-5 mb-4 shadow-card space-y-3">
+        <motion.div variants={fadeInUp} className="glass rounded-2xl border border-border/40 p-5 mb-4 shadow-card">
           <p className="text-secondary-foreground text-sm leading-relaxed">
-            SpaceWise is an educational app that helps people learn from real space mission failures.
-          </p>
-          <p className="text-secondary-foreground text-sm leading-relaxed">
-            Browse missions from NASA, ESA, ISRO, and others. Each mission has a short summary, a clear "lesson learned," and an optional key fact. Try the Apollo 13 scenario and test your knowledge with the quiz.
-          </p>
-          <p className="text-secondary-foreground text-sm leading-relaxed">
-            A listen feature reads mission text aloud with adjustable speed to support different reading preferences.
+            SpaceWise is an educational app that helps people learn from real space mission failures and successes. Every failure taught us something — SpaceWise makes those lessons easy to discover and remember.
           </p>
         </motion.div>
 
-        <motion.div variants={fadeInUp} className="gradient-card rounded-xl border border-primary/20 p-5 shadow-card">
-          <p className="text-primary text-sm font-medium text-center">
-            We learn from space mission failures to build a better future — in space and on Earth.
+        {/* Features grid */}
+        <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-3 mb-4">
+          {features.map((f) => (
+            <div key={f.label} className="glass rounded-2xl border border-border/40 p-4">
+              <f.icon className="w-5 h-5 text-primary mb-2.5" />
+              <h3 className="font-heading font-semibold text-foreground text-sm mb-1">{f.label}</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">{f.desc}</p>
+            </div>
+          ))}
+        </motion.div>
+
+        <motion.div variants={fadeInUp} className="glass rounded-2xl border border-primary/20 p-5 shadow-card ring-glow">
+          <p className="text-primary text-sm font-medium text-center leading-relaxed">
+            We learn from space mission failures to build a better future — in space and on Earth. 🌍
           </p>
         </motion.div>
 
         <motion.div variants={fadeInUp} className="text-center mt-8">
-          <p className="text-muted-foreground text-xs flex items-center justify-center gap-1">
-            Made with <Heart className="w-3 h-3 text-destructive" /> for the Apple Swift Student Challenge
+          <p className="text-muted-foreground text-xs flex items-center justify-center gap-1.5">
+            Made with <Heart className="w-3 h-3 text-destructive" /> for learning
           </p>
         </motion.div>
       </motion.div>
