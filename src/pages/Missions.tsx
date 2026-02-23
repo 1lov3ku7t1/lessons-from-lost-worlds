@@ -14,7 +14,7 @@ const Missions = () => {
   const partialCount = missions.filter((m) => m.status === "Partial").length;
 
   return (
-    <div className="relative min-h-screen px-6 py-10">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="relative min-h-screen px-6 py-10">
       <StarField />
       <div className="relative z-10 w-full max-w-lg mx-auto">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="mb-8">
@@ -63,7 +63,7 @@ const Missions = () => {
           ))}
         </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

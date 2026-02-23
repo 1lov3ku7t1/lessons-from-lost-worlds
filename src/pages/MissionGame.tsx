@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Trophy, RotateCcw, Gamepad2, CheckCircle2, XCircle, GripVertical } from "lucide-react";
 import { getGameForMission, type MissionGame, type OrderEventsGame, type TrueFalseGame, type FillBlankGame, type MatchingGame } from "@/data/games";
 import { missions } from "@/data/missions";
+import { useProgress } from "@/hooks/useProgress";
 import StarField from "@/components/StarField";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
@@ -289,6 +290,7 @@ const MissionGame = () => {
   const mission = missions.find((m) => m.id === id);
   const [score, setScore] = useState<number | null>(null);
   const [key, setKey] = useState(0);
+  const { recordGameScore } = useProgress();
 
   if (!game || !mission) {
     return (
@@ -298,7 +300,7 @@ const MissionGame = () => {
     );
   }
 
-  const handleComplete = (s: number) => setScore(s);
+  const handleComplete = (s: number) => { setScore(s); if (id) recordGameScore(id, s); };
   const handleRetry = () => { setScore(null); setKey((k) => k + 1); };
 
   const gameTypeLabel = game.type === "order-events" ? "🔢 Order Events"

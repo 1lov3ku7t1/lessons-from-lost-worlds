@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.cdnfonts.com/css/opendyslexic');
 
 @tailwind base;
 @tailwind components;
@@ -117,4 +118,32 @@
   .ring-glow {
     box-shadow: 0 0 0 1px hsl(215 100% 55% / 0.15), var(--shadow-glow);
   }
+}
+
+/* Accessibility: Dyslexia Font */
+.font-dyslexia,
+.font-dyslexia * {
+  font-family: 'OpenDyslexic', sans-serif !important;
+}
+
+/* Accessibility: Font Sizes */
+.text-size-small { font-size: 14px; }
+.text-size-medium { font-size: 16px; }
+.text-size-large { font-size: 19px; }
+
+/* Accessibility: High Contrast */
+.high-contrast {
+  --foreground: 0 0% 100%;
+  --muted-foreground: 220 10% 70%;
+  --secondary-foreground: 220 15% 90%;
+  --border: 230 15% 30%;
+}
+
+/* Accessibility: Reduced Motion */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
 }
