@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Accessibility, X, Type, Eye, Zap, ALargeSmall } from "lucide-react";
+import { Settings2, X, Type, Eye, Zap, ALargeSmall } from "lucide-react";
 import { useAccessibility } from "@/hooks/useAccessibility";
 
 const AccessibilityPanel = () => {
@@ -15,7 +15,7 @@ const AccessibilityPanel = () => {
         className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-2xl gradient-accent shadow-glow flex items-center justify-center hover:opacity-90 transition-all"
         aria-label="Accessibility settings"
       >
-        <Accessibility className="w-5 h-5 text-primary-foreground" />
+        <Settings2 className="w-5 h-5 text-primary-foreground" />
       </button>
 
       {/* Panel overlay */}
@@ -39,7 +39,7 @@ const AccessibilityPanel = () => {
               <div className="glass rounded-3xl border border-border/40 p-6 shadow-elevated">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2.5">
-                    <Accessibility className="w-5 h-5 text-primary" />
+                    <Settings2 className="w-5 h-5 text-primary" />
                     <h2 className="font-heading font-bold text-foreground text-lg">Accessibility</h2>
                   </div>
                   <button onClick={() => setOpen(false)} className="w-8 h-8 rounded-lg glass-subtle flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
