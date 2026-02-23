@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Zap, CheckCircle2, XCircle, AlertTriangle } from "lucide-react";
 import { apolloScenario } from "@/data/missions";
+import { useProgress } from "@/hooks/useProgress";
 import StarField from "@/components/StarField";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const Scenario = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState<string | null>(null);
+  const { markScenarioComplete } = useProgress();
   const selectedOption = apolloScenario.find((o) => o.id === selected);
 
   return (
@@ -48,7 +50,7 @@ const Scenario = () => {
             <motion.button
               key={option.id}
               variants={fadeInUp}
-              onClick={() => setSelected(option.id)}
+              onClick={() => { setSelected(option.id); markScenarioComplete(); }}
               disabled={!!selected}
               className={`w-full text-left glass rounded-2xl border p-4 transition-all duration-300 ${
                 selected === option.id

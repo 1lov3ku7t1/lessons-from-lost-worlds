@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Lightbulb, Quote, Zap, Calendar, Building2, Layers, Gamepad2 } from "lucide-react";
 import { missions } from "@/data/missions";
 import { getGameForMission } from "@/data/games";
+import { useProgress } from "@/hooks/useProgress";
 import StatusBadge from "@/components/StatusBadge";
 import ListenButton from "@/components/ListenButton";
 import StarField from "@/components/StarField";
@@ -13,6 +15,11 @@ const MissionDetail = () => {
   const { id } = useParams();
   const mission = missions.find((m) => m.id === id);
   const hasGame = !!getGameForMission(id || "");
+  const { markMissionRead } = useProgress();
+
+  useEffect(() => {
+    if (id) markMissionRead(id);
+  }, [id]);
 
   if (!mission) {
     return (
@@ -23,7 +30,7 @@ const MissionDetail = () => {
   }
 
   return (
-    <div className="relative min-h-screen px-6 py-10">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="relative min-h-screen px-6 py-10">
       <StarField />
       <motion.div
         variants={staggerContainer}
@@ -126,7 +133,7 @@ const MissionDetail = () => {
           </motion.div>
         )}
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 

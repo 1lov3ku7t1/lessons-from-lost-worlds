@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, CheckCircle2, XCircle, Trophy, RotateCcw, Brain } from "lucide-react";
 import { quizQuestions } from "@/data/missions";
+import { useProgress } from "@/hooks/useProgress";
 import StarField from "@/components/StarField";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
@@ -13,6 +14,7 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const [answered, setAnswered] = useState(false);
+  const { recordQuizScore } = useProgress();
 
   const question = quizQuestions[currentQ];
 
@@ -30,6 +32,7 @@ const Quiz = () => {
       setAnswered(false);
     } else {
       setFinished(true);
+      recordQuizScore(Math.round(((score + (selected === quizQuestions[currentQ].correctIndex ? 1 : 0)) / quizQuestions.length) * 100));
     }
   };
 
