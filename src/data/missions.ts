@@ -8,6 +8,7 @@ export interface Mission {
   phase: string;
   status: MissionStatus;
   icon: string;
+  image: string;
   summary: string;
   lessonLearned: string;
   keyFact?: string;
@@ -39,6 +40,7 @@ export const missions: Mission[] = [
     phase: "Transit",
     status: "Partial",
     icon: "🌍",
+    image: "/images/apollo-13.webp",
     summary: "An oxygen tank exploded en route to the Moon, forcing the crew to abort the landing and use the Lunar Module as a lifeboat to return safely to Earth.",
     lessonLearned: "Redundancy, calm problem-solving, and teamwork can turn a catastrophe into a successful rescue. NASA redesigned the oxygen tanks and added a third tank.",
     keyFact: '"Houston, we\'ve had a problem." — Jack Swigert, April 13, 1970',
@@ -52,6 +54,7 @@ export const missions: Mission[] = [
     phase: "Orbit Insertion",
     status: "Failure",
     icon: "⚙️",
+    image: "/images/mars-climate-orbiter.webp",
     summary: "The spacecraft was lost because one engineering team used imperial units while another used metric, causing a navigation error during orbit insertion at Mars.",
     lessonLearned: "Always verify that all teams use the same units. A simple mismatch destroyed a $327 million mission. Double-check interfaces between systems.",
     keyFact: "The 'metric mix-up' has become the most famous unit conversion error in engineering history.",
@@ -65,6 +68,7 @@ export const missions: Mission[] = [
     phase: "Landing",
     status: "Failure",
     icon: "🌙",
+    image: "/images/schiaparelli-edm.webp",
     summary: "The lander's computer thought it had already landed while still 3.7 km above the surface, shutting off braking thrusters too early and crashing into Mars.",
     lessonLearned: "Software must handle unexpected sensor data gracefully. The IMU saturated and produced an error that cascaded through the guidance system.",
     keyFact: "Schiaparelli was a technology demonstrator — its crash still provided valuable data for the ExoMars program.",
@@ -78,6 +82,7 @@ export const missions: Mission[] = [
     phase: "Landing",
     status: "Failure",
     icon: "📡",
+    image: "/images/beagle-2.webp",
     summary: "The lander successfully touched down on Mars but its solar panels failed to fully deploy, blocking the communications antenna and preventing any contact.",
     lessonLearned: "Mechanical deployment sequences are critical. Redundant communication paths and testing under realistic conditions are essential.",
     keyFact: "Beagle 2 was found intact on Mars by NASA's MRO in 2015 — 12 years after landing.",
@@ -91,6 +96,7 @@ export const missions: Mission[] = [
     phase: "Re-entry",
     status: "Partial",
     icon: "☀️",
+    image: "/images/genesis.webp",
     summary: "The sample return capsule crashed into the Utah desert at 311 km/h because its drogue parachute failed to deploy — a gravity switch was installed backwards.",
     lessonLearned: "Independent verification of hardware installation is critical. Despite the crash, scientists recovered usable solar wind samples.",
     keyFact: "A sensor the size of a pencil eraser was installed upside-down, causing the parachute failure.",
@@ -104,6 +110,7 @@ export const missions: Mission[] = [
     phase: "Landing",
     status: "Failure",
     icon: "🚀",
+    image: "/images/chandrayaan-2.webp",
     summary: "The Vikram lander lost communication during its final descent to the Moon's south pole, crashing about 500 meters from the intended landing site.",
     lessonLearned: "Soft-landing on the Moon remains extremely difficult. The guidance software couldn't handle deviations during the braking phase. ISRO applied these lessons to Chandrayaan-3's successful landing in 2023.",
     keyFact: "Chandrayaan-3 succeeded in 2023, making India the 4th country to soft-land on the Moon — and the first at the south pole.",
@@ -117,6 +124,7 @@ export const missions: Mission[] = [
     phase: "Surface Operations",
     status: "Success",
     icon: "❄️",
+    image: "/images/phoenix.webp",
     summary: "Phoenix successfully landed near Mars's north pole and confirmed the existence of water ice just below the surface. It operated for 5 months before Martian winter ended its mission.",
     lessonLearned: "Even successful missions have limits. Phoenix proved that planning for environmental conditions is crucial — it exceeded its 90-day mission but couldn't survive the polar winter.",
     keyFact: "Phoenix was the first mission to directly sample and analyze Martian water ice.",
