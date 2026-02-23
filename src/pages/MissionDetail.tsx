@@ -40,6 +40,16 @@ const MissionDetail = () => {
           </button>
         </motion.div>
 
+        {/* Hero image */}
+        <motion.div variants={fadeInUp} className="rounded-2xl overflow-hidden mb-6 border border-border/40 shadow-card">
+          <img
+            src={mission.image}
+            alt={`${mission.name} mission illustration`}
+            className="w-full h-48 object-cover"
+            loading="lazy"
+          />
+        </motion.div>
+
         {/* Hero header */}
         <motion.div variants={fadeInUp} className="flex items-start gap-4 mb-6">
           <div className="w-16 h-16 rounded-2xl glass border border-border/40 flex items-center justify-center text-3xl shrink-0">
