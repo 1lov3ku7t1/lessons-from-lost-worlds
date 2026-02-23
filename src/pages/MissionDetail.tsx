@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Lightbulb, Quote, Zap, Calendar, Building2, Layers } from "lucide-react";
+import { ArrowLeft, Lightbulb, Quote, Zap, Calendar, Building2, Layers, Gamepad2 } from "lucide-react";
 import { missions } from "@/data/missions";
+import { getGameForMission } from "@/data/games";
 import StatusBadge from "@/components/StatusBadge";
 import ListenButton from "@/components/ListenButton";
 import StarField from "@/components/StarField";
@@ -11,6 +12,7 @@ const MissionDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const mission = missions.find((m) => m.id === id);
+  const hasGame = !!getGameForMission(id || "");
 
   if (!mission) {
     return (
@@ -88,9 +90,22 @@ const MissionDetail = () => {
           </motion.div>
         )}
 
+        {/* Mini-game CTA */}
+        {hasGame && (
+          <motion.div variants={fadeInUp} className="mt-4">
+            <button
+              onClick={() => navigate(`/missions/${id}/game`)}
+              className="w-full py-3.5 rounded-2xl glass border border-accent/30 hover:border-accent/60 text-foreground font-heading font-semibold transition-all duration-300 flex items-center justify-center gap-2.5"
+            >
+              <Gamepad2 className="w-5 h-5 text-accent" />
+              Play Mini-Game
+            </button>
+          </motion.div>
+        )}
+
         {/* Scenario CTA */}
         {mission.id === "apollo-13" && (
-          <motion.div variants={fadeInUp} className="mt-6">
+          <motion.div variants={fadeInUp} className="mt-3">
             <button
               onClick={() => navigate("/scenario")}
               className="w-full py-4 rounded-2xl gradient-accent text-primary-foreground font-heading font-semibold shadow-glow hover:opacity-90 transition-all duration-300 hover:shadow-[0_0_60px_hsl(215_100%_55%/0.2)] flex items-center justify-center gap-2.5"
