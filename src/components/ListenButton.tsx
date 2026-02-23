@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from "react";
-import { Volume2, VolumeX, Pause, Play } from "lucide-react";
+import { Volume2, Pause } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 
 interface ListenButtonProps {
@@ -40,14 +40,18 @@ const ListenButton = ({ text }: ListenButtonProps) => {
     <div className="flex items-center gap-3">
       <button
         onClick={() => { speak(); setShowControls(true); }}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary hover:bg-secondary/80 transition-colors text-sm text-secondary-foreground"
+        className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+          isPlaying
+            ? "gradient-accent text-primary-foreground shadow-glow"
+            : "glass border border-border/40 text-secondary-foreground hover:border-primary/30 hover:text-foreground"
+        }`}
       >
-        {isPlaying ? <Pause className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+        {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
         {isPlaying ? "Pause" : "Listen"}
       </button>
       {showControls && (
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span>{speed.toFixed(1)}×</span>
+          <span className="font-mono tabular-nums">{speed.toFixed(1)}×</span>
           <Slider
             value={[speed]}
             onValueChange={handleSpeedChange}
