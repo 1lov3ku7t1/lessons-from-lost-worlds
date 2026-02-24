@@ -17,6 +17,7 @@ import About from "./pages/About";
 import MissionGame from "./pages/MissionGame";
 import Progress from "./pages/Progress";
 import Stats from "./pages/Stats";
+import TeacherMode from "./pages/TeacherMode";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const AnimatedRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/progress" element={<Progress />} />
         <Route path="/stats" element={<Stats />} />
+        <Route path="/teacher" element={<TeacherMode />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
