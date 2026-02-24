@@ -20,6 +20,8 @@ import Stats from "./pages/Stats";
 import TeacherMode from "./pages/TeacherMode";
 import Walkthrough from "./pages/Walkthrough";
 import StudentTracker from "./pages/StudentTracker";
+import MissionData from "./pages/MissionData";
+import NarrativeOnboarding from "./pages/NarrativeOnboarding";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,7 +35,10 @@ const AnimatedRoutes = () => {
         <Route path="/missions" element={<Missions />} />
         <Route path="/missions/:id" element={<MissionDetail />} />
         <Route path="/missions/:id/game" element={<MissionGame />} />
+        <Route path="/scenario/:id" element={<Scenario />} />
         <Route path="/scenario" element={<Scenario />} />
+        <Route path="/missions/:id/data" element={<MissionData />} />
+        <Route path="/onboarding" element={<NarrativeOnboarding />} />
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/about" element={<About />} />
         <Route path="/progress" element={<Progress />} />

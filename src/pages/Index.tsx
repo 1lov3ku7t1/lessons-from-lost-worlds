@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Rocket, BookOpen, HelpCircle, Info, Sparkles, Trophy, BarChart3, GraduationCap } from "lucide-react";
@@ -8,8 +9,14 @@ import { fadeInUp, staggerContainer } from "@/lib/animations";
 const Index = () => {
   const navigate = useNavigate();
   const { getProgressPercent, getEarnedBadges } = useProgress();
+  const hasOnboarded = localStorage.getItem("spacewise-onboarded") === "true";
   const percent = getProgressPercent();
   const badges = getEarnedBadges();
+
+
+  useEffect(() => {
+    if (!hasOnboarded) navigate("/onboarding", { replace: true });
+  }, [hasOnboarded, navigate]);
 
   return (
     <motion.div
