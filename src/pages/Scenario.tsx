@@ -1,17 +1,31 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Zap, CheckCircle2, XCircle, AlertTriangle } from "lucide-react";
-import { apolloScenario } from "@/data/missions";
+import { missions } from "@/data/missions";
+import { missionScenarios } from "@/data/scenarios";
 import { useProgress } from "@/hooks/useProgress";
 import StarField from "@/components/StarField";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const Scenario = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const missionId = id || "apollo-13";
+  const scenario = missionScenarios.find((s) => s.missionId === missionId);
+  const mission = missions.find((m) => m.id === missionId);
   const [selected, setSelected] = useState<string | null>(null);
   const { markScenarioComplete } = useProgress();
-  const selectedOption = apolloScenario.find((o) => o.id === selected);
+
+  if (!scenario || !mission) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">Scenario not found.</p>
+      </div>
+    );
+  }
+
+  const selectedOption = scenario.options.find((o) => o.id === selected);
 
   return (
     <div className="relative min-h-screen px-6 py-10">
@@ -24,7 +38,7 @@ const Scenario = () => {
       >
         <motion.div variants={fadeInUp}>
           <button
-            onClick={() => navigate("/missions/apollo-13")}
+            onClick={() => navigate(`/missions/${missionId}`)}
             className="w-10 h-10 rounded-xl glass border border-border/40 flex items-center justify-center hover:border-primary/30 transition-all mb-6"
           >
             <ArrowLeft className="w-4 h-4 text-secondary-foreground" />
@@ -36,17 +50,21 @@ const Scenario = () => {
             <div className="w-8 h-8 rounded-lg bg-warning/15 flex items-center justify-center">
               <AlertTriangle className="w-4 h-4 text-warning" />
             </div>
-            <h1 className="text-xl font-heading font-bold text-foreground">What Would You Do?</h1>
+            <div>
+              <h1 className="text-xl font-heading font-bold text-foreground">What Would You Do?</h1>
+              <p className="text-xs text-muted-foreground">{mission.name} — {mission.year}</p>
+            </div>
           </div>
           <div className="glass rounded-2xl border border-warning/15 p-4">
             <p className="text-secondary-foreground text-sm leading-relaxed">
-              <span className="text-warning font-semibold">Apollo 13, April 1970.</span> An oxygen tank just exploded. The Command Module is losing power. You're 320,000 km from Earth. What's your call?
+              <span className="text-warning font-semibold">{mission.name}, {mission.year}.</span>{" "}
+              {scenario.situation}
             </p>
           </div>
         </motion.div>
 
         <motion.div variants={staggerContainer} className="space-y-3 mb-6">
-          {apolloScenario.map((option) => (
+          {scenario.options.map((option) => (
             <motion.button
               key={option.id}
               variants={fadeInUp}
