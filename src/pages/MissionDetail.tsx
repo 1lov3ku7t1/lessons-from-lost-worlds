@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowLeft, Lightbulb, Quote, Zap, Calendar, Building2, Layers, Gamepad2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, Lightbulb, Quote, Zap, Calendar, Building2, Layers, Gamepad2, Monitor } from "lucide-react";
 import { missions } from "@/data/missions";
 import { getGameForMission } from "@/data/games";
 import { useProgress } from "@/hooks/useProgress";
@@ -17,6 +17,7 @@ const MissionDetail = () => {
   const mission = missions.find((m) => m.id === id);
   const hasGame = !!getGameForMission(id || "");
   const { markMissionRead } = useProgress();
+  const [show8bit, setShow8bit] = useState(false);
 
   useEffect(() => {
     if (id) markMissionRead(id);
@@ -46,11 +47,6 @@ const MissionDetail = () => {
           >
             <ArrowLeft className="w-4 h-4 text-secondary-foreground" />
           </button>
-        </motion.div>
-
-        {/* 8-bit animation */}
-        <motion.div variants={fadeInUp} className="mb-6">
-          <MissionPixelAnimation missionId={mission.id} />
         </motion.div>
 
         {/* Hero image */}
@@ -113,9 +109,34 @@ const MissionDetail = () => {
           </motion.div>
         )}
 
-        {/* Mini-game CTA */}
-        {hasGame && (
-          <motion.div variants={fadeInUp} className="mt-4">
+        {/* Action buttons */}
+        <motion.div variants={fadeInUp} className="space-y-3 mt-4">
+          {/* 8-bit Replay button */}
+          <button
+            onClick={() => setShow8bit(!show8bit)}
+            className="w-full py-3.5 rounded-2xl glass border border-primary/30 hover:border-primary/60 text-foreground font-heading font-semibold transition-all duration-300 flex items-center justify-center gap-2.5"
+          >
+            <Monitor className="w-5 h-5 text-primary" />
+            {show8bit ? "Hide 8-Bit Replay" : "Watch 8-Bit Replay"}
+          </button>
+
+          {/* 8-bit animation (expandable) */}
+          <AnimatePresence>
+            {show8bit && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <MissionPixelAnimation missionId={mission.id} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Mini-game CTA */}
+          {hasGame && (
             <button
               onClick={() => navigate(`/missions/${id}/game`)}
               className="w-full py-3.5 rounded-2xl glass border border-accent/30 hover:border-accent/60 text-foreground font-heading font-semibold transition-all duration-300 flex items-center justify-center gap-2.5"
@@ -123,12 +144,10 @@ const MissionDetail = () => {
               <Gamepad2 className="w-5 h-5 text-accent" />
               Play Mini-Game
             </button>
-          </motion.div>
-        )}
+          )}
 
-        {/* Scenario CTA */}
-        {mission.id === "apollo-13" && (
-          <motion.div variants={fadeInUp} className="mt-3">
+          {/* Scenario CTA */}
+          {mission.id === "apollo-13" && (
             <button
               onClick={() => navigate("/scenario")}
               className="w-full py-4 rounded-2xl gradient-accent text-primary-foreground font-heading font-semibold shadow-glow hover:opacity-90 transition-all duration-300 hover:shadow-[0_0_60px_hsl(215_100%_55%/0.2)] flex items-center justify-center gap-2.5"
@@ -136,8 +155,8 @@ const MissionDetail = () => {
               <Zap className="w-5 h-5" />
               What Would You Do?
             </button>
-          </motion.div>
-        )}
+          )}
+        </motion.div>
       </motion.div>
     </motion.div>
   );
