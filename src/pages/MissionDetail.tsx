@@ -8,6 +8,7 @@ import { useProgress } from "@/hooks/useProgress";
 import StatusBadge from "@/components/StatusBadge";
 import ListenButton from "@/components/ListenButton";
 import StarField from "@/components/StarField";
+import MissionPixelAnimation from "@/components/MissionPixelAnimation";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const MissionDetail = () => {
@@ -45,6 +46,11 @@ const MissionDetail = () => {
           >
             <ArrowLeft className="w-4 h-4 text-secondary-foreground" />
           </button>
+        </motion.div>
+
+        {/* 8-bit animation */}
+        <motion.div variants={fadeInUp} className="mb-6">
+          <MissionPixelAnimation missionId={mission.id} />
         </motion.div>
 
         {/* Hero image */}
