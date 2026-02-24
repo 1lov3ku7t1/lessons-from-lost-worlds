@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Rocket, BookOpen, HelpCircle, Info, Sparkles, Trophy, BarChart3 } from "lucide-react";
+import { Rocket, BookOpen, HelpCircle, Info, Sparkles, Trophy, BarChart3, GraduationCap } from "lucide-react";
 import StarField from "@/components/StarField";
 import { useProgress } from "@/hooks/useProgress";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
@@ -101,6 +101,14 @@ const Index = () => {
               <span className="text-sm">Statistics</span>
             </button>
           </div>
+
+          <button
+            onClick={() => navigate("/teacher")}
+            className="w-full py-3.5 rounded-2xl glass border border-accent/30 hover:border-accent/60 text-secondary-foreground hover:text-foreground font-heading font-medium transition-all duration-300 flex items-center justify-center gap-2.5"
+          >
+            <GraduationCap className="w-5 h-5 text-accent" />
+            Teacher Mode
+          </button>
         </motion.div>
 
         <motion.button
