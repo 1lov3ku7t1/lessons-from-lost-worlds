@@ -1,14 +1,22 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronRight, ChevronLeft, Rocket } from "lucide-react";
+import { X, ChevronRight, ChevronLeft, Palette } from "lucide-react";
+
+/* ─── avatar options ─── */
+const avatarOptions = [
+  "🧑‍🚀", "👩‍🚀", "👨‍🚀", "🤖", "👽", "🛸",
+  "🚀", "🌍", "🪐", "⭐", "🌙", "☄️",
+  "🐱", "🦊", "🐻‍❄️", "🐶", "🦉", "🐙",
+  "🧙‍♂️", "🧑‍🔬", "👾", "🎃", "🦄", "🐉",
+];
 
 /* ─── route-specific tips ─── */
 const routeTips: Record<string, { title: string; messages: string[] }> = {
   "/": {
     title: "Welcome! 👋",
     messages: [
-      "I'm Cosmo, your space guide! I'll help you explore SpaceWise.",
+      "I'm your space guide! I'll help you explore SpaceWise.",
       "Tap 'Explore Missions' to learn from real space mission failures & successes.",
       "Try the Quiz to test your knowledge, or check your Progress & Stats!",
     ],
@@ -73,7 +81,7 @@ const missionDetailTips = {
 /* ─── onboarding for first visit ─── */
 const onboardingSteps = [
   {
-    title: "Hey there, I'm Cosmo! 🚀",
+    title: "Hey there! 🚀",
     message: "I'm your friendly space guide. I'll help you navigate SpaceWise and learn from real space missions!",
   },
   {
@@ -94,6 +102,20 @@ const SpaceGuide = () => {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(0);
   const [dismissed, setDismissed] = useState(false);
+  const [showAvatarPicker, setShowAvatarPicker] = useState(false);
+  const [avatar, setAvatar] = useState("🧑‍🚀");
+
+  // Load saved avatar
+  useEffect(() => {
+    const saved = localStorage.getItem("spacewise-avatar");
+    if (saved) setAvatar(saved);
+  }, []);
+
+  const pickAvatar = (emoji: string) => {
+    setAvatar(emoji);
+    localStorage.setItem("spacewise-avatar", emoji);
+    setShowAvatarPicker(false);
+  };
 
   // First visit onboarding
   useEffect(() => {
@@ -107,7 +129,6 @@ const SpaceGuide = () => {
   useEffect(() => {
     setTipIndex(0);
     setDismissed(false);
-    // Auto-show bubble briefly on new pages (not during onboarding)
     if (!showOnboarding) {
       setShowBubble(true);
       const t = setTimeout(() => setShowBubble(false), 6000);
@@ -151,7 +172,7 @@ const SpaceGuide = () => {
                 transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
                 className="w-24 h-24 rounded-full gradient-accent shadow-glow flex items-center justify-center"
               >
-                <span className="text-5xl">🧑‍🚀</span>
+                <span className="text-5xl">{avatar}</span>
               </motion.div>
             </div>
 
@@ -201,6 +222,55 @@ const SpaceGuide = () => {
   /* ─── floating guide ─── */
   return (
     <>
+      {/* Avatar picker modal */}
+      <AnimatePresence>
+        {showAvatarPicker && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[70] flex items-end justify-center bg-background/60 backdrop-blur-sm px-6 pb-24"
+            onClick={() => setShowAvatarPicker(false)}
+          >
+            <motion.div
+              initial={{ y: 40, opacity: 0, scale: 0.95 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              exit={{ y: 20, opacity: 0, scale: 0.95 }}
+              transition={{ type: "spring", damping: 22 }}
+              className="w-full max-w-xs"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="glass rounded-3xl border border-border/40 p-5 shadow-elevated">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-heading font-bold text-foreground text-sm">Choose Your Guide</h3>
+                  <button
+                    onClick={() => setShowAvatarPicker(false)}
+                    className="w-7 h-7 rounded-lg glass-subtle flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+                <div className="grid grid-cols-6 gap-2">
+                  {avatarOptions.map((emoji) => (
+                    <button
+                      key={emoji}
+                      onClick={() => pickAvatar(emoji)}
+                      className={`w-11 h-11 rounded-xl flex items-center justify-center text-xl transition-all hover:scale-110 ${
+                        avatar === emoji
+                          ? "gradient-accent shadow-glow ring-2 ring-primary/50"
+                          : "glass-subtle hover:bg-accent/10"
+                      }`}
+                    >
+                      {emoji}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Speech bubble */}
       <AnimatePresence>
         {showBubble && !dismissed && (
@@ -212,15 +282,24 @@ const SpaceGuide = () => {
             className="fixed bottom-24 left-6 right-6 z-[60] max-w-xs mx-auto"
           >
             <div className="glass rounded-2xl border border-border/40 p-4 shadow-elevated relative">
-              <button
-                onClick={() => { setShowBubble(false); setDismissed(true); }}
-                className="absolute top-2 right-2 w-6 h-6 rounded-full glass-subtle flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <X className="w-3 h-3" />
-              </button>
+              <div className="absolute top-2 right-2 flex gap-1">
+                <button
+                  onClick={() => setShowAvatarPicker(true)}
+                  className="w-6 h-6 rounded-full glass-subtle flex items-center justify-center text-muted-foreground hover:text-primary transition-colors"
+                  aria-label="Change avatar"
+                >
+                  <Palette className="w-3 h-3" />
+                </button>
+                <button
+                  onClick={() => { setShowBubble(false); setDismissed(true); }}
+                  className="w-6 h-6 rounded-full glass-subtle flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
 
               <p className="text-xs font-heading font-semibold text-primary mb-1.5">{currentTips.title}</p>
-              <p className="text-sm text-secondary-foreground leading-relaxed pr-4">
+              <p className="text-sm text-secondary-foreground leading-relaxed pr-8">
                 {currentTips.messages[tipIndex]}
               </p>
 
@@ -262,7 +341,7 @@ const SpaceGuide = () => {
         )}
       </AnimatePresence>
 
-      {/* Cosmo avatar button */}
+      {/* Avatar button */}
       <motion.button
         whileTap={{ scale: 0.9 }}
         onClick={() => { setShowBubble(!showBubble); setDismissed(false); }}
@@ -274,7 +353,7 @@ const SpaceGuide = () => {
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
           className="text-2xl"
         >
-          🧑‍🚀
+          {avatar}
         </motion.span>
       </motion.button>
     </>
