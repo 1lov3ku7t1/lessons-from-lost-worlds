@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft, GraduationCap, Clock, Target, BookOpen,
   MessageSquare, Beaker, ClipboardCheck, ChevronDown, ChevronUp,
-  Layers, Bookmark
+  Layers, Bookmark, Users
 } from "lucide-react";
 import { missions } from "@/data/missions";
 import { lessonPlans, LessonPlan } from "@/data/teacherLessons";
@@ -222,6 +222,17 @@ const TeacherMode = () => {
             );
           })}
         </div>
+
+        {/* Student Tracker CTA */}
+        <motion.div variants={fadeInUp} className="mt-6">
+          <button
+            onClick={() => navigate("/students")}
+            className="w-full py-4 rounded-2xl gradient-accent text-primary-foreground font-heading font-semibold shadow-glow hover:opacity-90 transition-all duration-300 flex items-center justify-center gap-2.5"
+          >
+            <Users className="w-5 h-5" />
+            Open Student Tracker
+          </button>
+        </motion.div>
 
         <motion.div variants={fadeInUp} className="mt-8 glass rounded-2xl border border-primary/20 p-5 shadow-card">
           <div className="flex items-center gap-2 mb-2">

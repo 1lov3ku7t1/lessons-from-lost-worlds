@@ -18,6 +18,8 @@ import MissionGame from "./pages/MissionGame";
 import Progress from "./pages/Progress";
 import Stats from "./pages/Stats";
 import TeacherMode from "./pages/TeacherMode";
+import Walkthrough from "./pages/Walkthrough";
+import StudentTracker from "./pages/StudentTracker";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +39,8 @@ const AnimatedRoutes = () => {
         <Route path="/progress" element={<Progress />} />
         <Route path="/stats" element={<Stats />} />
         <Route path="/teacher" element={<TeacherMode />} />
+        <Route path="/walkthrough/:id" element={<Walkthrough />} />
+        <Route path="/students" element={<StudentTracker />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
