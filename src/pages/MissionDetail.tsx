@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Lightbulb, Quote, Zap, Calendar, Building2, Layers, Gamepad2, Monitor } from "lucide-react";
+import { ArrowLeft, Lightbulb, Quote, Zap, Calendar, Building2, Layers, Gamepad2, Monitor, GraduationCap } from "lucide-react";
 import { missions } from "@/data/missions";
 import { getGameForMission } from "@/data/games";
 import { useProgress } from "@/hooks/useProgress";
@@ -111,6 +111,14 @@ const MissionDetail = () => {
 
         {/* Action buttons */}
         <motion.div variants={fadeInUp} className="space-y-3 mt-4">
+          {/* Guided Walkthrough */}
+          <button
+            onClick={() => navigate(`/walkthrough/${id}`)}
+            className="w-full py-3.5 rounded-2xl glass border border-success/30 hover:border-success/60 text-foreground font-heading font-semibold transition-all duration-300 flex items-center justify-center gap-2.5"
+          >
+            <GraduationCap className="w-5 h-5 text-success" />
+            Guided Walkthrough
+          </button>
           {/* 8-bit Replay button */}
           <button
             onClick={() => setShow8bit(!show8bit)}
