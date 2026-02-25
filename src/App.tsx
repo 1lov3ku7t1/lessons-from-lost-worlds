@@ -7,7 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import { AccessibilityProvider } from "@/hooks/useAccessibility";
 import { ProgressProvider } from "@/hooks/useProgress";
 import AccessibilityPanel from "@/components/AccessibilityPanel";
-import SpaceGuide from "@/components/SpaceGuide";
+
 import Index from "./pages/Index";
 import Missions from "./pages/Missions";
 import MissionDetail from "./pages/MissionDetail";
@@ -61,7 +61,7 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <AnimatedRoutes />
-            <SpaceGuide />
+            
             <AccessibilityPanel />
           </BrowserRouter>
         </TooltipProvider>
