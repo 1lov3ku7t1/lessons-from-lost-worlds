@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Rocket, Heart, BookOpen, Zap, Volume2, Accessibility } from "lucide-react";
+import { ArrowLeft, Rocket, Heart, BookOpen, Zap, Volume2, Users } from "lucide-react";
 import StarField from "@/components/StarField";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
@@ -8,7 +8,7 @@ const features = [
   { icon: BookOpen, label: "Mission Explorer", desc: "Browse real missions from NASA, ESA, ISRO and more" },
   { icon: Zap, label: "What If Scenarios", desc: "Make decisions and see how they compare to history" },
   { icon: Volume2, label: "Listen Along", desc: "Text-to-speech with adjustable speed for accessibility" },
-  { icon: Accessibility, label: "Inclusive Design", desc: "Supports dyslexia-friendly reading and screen readers" },
+  { icon: Users, label: "Inclusive Design", desc: "Supports diverse learning styles and screen readers" },
 ];
 
 const About = () => {
