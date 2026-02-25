@@ -104,6 +104,7 @@ const SpaceGuide = () => {
   const [dismissed, setDismissed] = useState(false);
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
   const [avatar, setAvatar] = useState("🧑‍🚀");
+  const [hidden, setHidden] = useState(() => localStorage.getItem("spacewise-guide-hidden") === "true");
 
   // Load saved avatar
   useEffect(() => {
@@ -142,11 +143,19 @@ const SpaceGuide = () => {
       : missionDetailTips
     : routeTips[location.pathname] || { title: "Exploring! 🌌", messages: ["Tap around to discover more about space missions!"] };
 
+  const hideGuide = () => {
+    setHidden(true);
+    localStorage.setItem("spacewise-guide-hidden", "true");
+    setShowBubble(false);
+  };
+
   const finishOnboarding = () => {
     localStorage.setItem("spacewise-onboarded", "true");
     setShowOnboarding(false);
     setShowBubble(true);
   };
+
+  if (hidden) return null;
 
   /* ─── onboarding overlay ─── */
   if (showOnboarding) {
@@ -302,6 +311,13 @@ const SpaceGuide = () => {
               <p className="text-sm text-secondary-foreground leading-relaxed pr-8">
                 {currentTips.messages[tipIndex]}
               </p>
+
+              <button
+                onClick={hideGuide}
+                className="mt-2 text-xs text-muted-foreground hover:text-destructive transition-colors underline underline-offset-2"
+              >
+                Hide guide permanently
+              </button>
 
               {currentTips.messages.length > 1 && (
                 <div className="flex items-center justify-between mt-3">
